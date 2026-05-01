@@ -1,13 +1,18 @@
 import os
-import cv2
 import threading
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+try:
+    import cv2
+    CV2_AVAILABLE = True
+except ImportError:
+    CV2_AVAILABLE = False
+
 from services.config import AI_BACKEND, ANTHROPIC_API_KEY
-from services.event_repository import init_db, list_events, count_events
+from services.event_repository import init_db, list_events
 from services.video_monitor import start_monitor, get_last_frame, get_camera_status, generate_mjpeg
 from services.ollama_client import warmup_model, chat_stream, check_ollama
 from services.claude_client import chat_stream_claude, check_claude
@@ -70,6 +75,8 @@ def get_events():
 
 @app.get("/frame")
 def get_frame():
+    if not CV2_AVAILABLE:
+        return JSONResponse({"message": "opencv não instalado."}, status_code=503)
     frame = get_last_frame()
     if frame is None:
         return JSONResponse({"message": "Sem frame disponível."}, status_code=503)
