@@ -13,9 +13,9 @@ class AgentProfile:
 
 
 AGENT_PROFILE = AgentProfile(
-    name="Agente AgroVision",
-    role="triagem operacional de eventos",
-    goal="Analisar detecções recentes, explicar riscos e sugerir a próxima ação.",
+    name="Assistente VigilAI",
+    role="monitoramento e triagem operacional de eventos",
+    goal="Analisar detecções recentes, identificar riscos e recomendar a próxima ação.",
 )
 
 SYSTEM_PROMPT = (

@@ -22,7 +22,7 @@ from services.schemas import ChatRequest
 # =========================
 # APP
 # =========================
-app = FastAPI(title="AgroVision AI")
+app = FastAPI(title="VigilAI")
 
 os.makedirs("static", exist_ok=True)
 os.makedirs("static/captures", exist_ok=True)
